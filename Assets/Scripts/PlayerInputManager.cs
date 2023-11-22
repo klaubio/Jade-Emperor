@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerInputManager : MonoBehaviour
 {
     public static PlayerInputManager instance;
-
+    public PlayerManager player;
 
 
 
@@ -22,9 +22,14 @@ public class PlayerInputManager : MonoBehaviour
     public float cameraverticalInput;
     public float camerahorizontalInput;
 
-    private void Awake()
+  
+
+    private void Start()
     {
+        player = GetComponent<PlayerManager>();
         instance = this;
+        player = FindObjectOfType<PlayerManager>();
+
     }
 
     public void Update()
@@ -33,7 +38,7 @@ public class PlayerInputManager : MonoBehaviour
         HandleCameraMovementInput();
     }
 
-    private void OnEnable()
+    public void OnEnable()
     {
         if(playercontrols == null)
         {
@@ -48,8 +53,26 @@ public class PlayerInputManager : MonoBehaviour
 
 
 
-    private void HandleMovementInput()
+    public void HandleMovementInput()
     {
+
+        if (player == null)
+        {
+            Debug.LogError("Player is null!");
+            return;
+        }
+
+        if (player.playerAnimatorManager == null)
+        {
+            Debug.LogError("PlayerAnimatorManager is null!");
+            return;
+        }
+
+
+
+
+
+
         verticalInput = movementInput.y; 
         horizontalInput = movementInput.x;
 
@@ -63,9 +86,11 @@ public class PlayerInputManager : MonoBehaviour
         {   
             moveAmount = 1;
         }
+
+        player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, moveAmount);
     }
 
-    private void HandleCameraMovementInput()
+    public void HandleCameraMovementInput()
     {
         cameraverticalInput = cameraInput.y;
         camerahorizontalInput = cameraInput.x;

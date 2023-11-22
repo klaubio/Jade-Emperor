@@ -5,16 +5,18 @@ using UnityEngine;
 public class PlayerManager : CharacterManager
 {
     public PlayerLocoMotionManager playercocomotionmanager;
+    public PlayerAnimatorManager playerAnimatorManager;
 
 
 
-
-
-    public void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         playercocomotionmanager = GetComponent<PlayerLocoMotionManager>();
-        
+        playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
     }
+
+ 
 
 
     public void Update()
